@@ -1,0 +1,79 @@
+GO
+CREATE TABLE Employee
+(
+EmpID varchar(10) primary key,
+EmpType bit not null,
+EmpName varchar(50) not null,
+EmpAge int null,
+EmpMail varchar(50) null,
+EmpPhone varchar(15) null,
+EmpPass varchar(40) not null,
+) 
+GO
+CREATE TABLE Advertisement
+(
+AdID varchar(10) primary key,
+AdType varchar(30) not null,
+AdPrice float not null ,
+AdPartner varchar (30) null,
+AdDes varchar(150) null,	
+)
+GO
+CREATE TABLE Category
+(
+CateID varchar(10) primary key,
+CateName varchar(50) not null,
+CateDes varchar(150) null,
+)
+GO
+CREATE TABLE Product
+(
+ProID int identity (1,1) primary key,
+CateID varchar(10) foreign key references Category(CateID),
+ProName varchar(50) not null,
+ProDes varchar(150) null,
+)
+CREATE TABLE Campaign
+(
+CampID int identity (1,1) primary key,
+CampName varchar(50) not null,
+ProID int foreign key references Product(ProID),
+StartDate datetime null,
+EndDate datetime null,
+Period int null,
+AdID varchar(10)foreign key references Advertisement(AdID),
+estBudget float null,
+actBudget float null,
+estSale float null,
+actSale float null,
+estVariance float null,
+actVariance float null,
+fnVariance float null,
+CampDes varchar(150) null,
+CampEnded bit not null,
+)
+GO
+insert into Employee values ('SP001','1','Alex Chasles','36','AlexStart@gmail.com','776589485','123456')
+insert into Employee values ('TC002','1','Henri Flachat','28','chatchit20@hotmail.com','09861234568','123456')
+insert into Employee values ('KS003','0','Tom Tresca','19','T-shirt@yahoo.com','856492136','123456')
+insert into Employee values ('PR15','1','Michel Flachat','49','hahahoho@gmail.com','0984561285','123456')
+insert into Employee values ('MJ01','0','Brooke Cuiver ','43','kindy0711@hotmail.com','0985894621','123456')
+insert into Advertisement values ('TII01','Internet',40,'NewStar','The promotions will available on the Facebook and other website')
+insert into Advertisement values ('GTT02','Television',20,'Universe','The promotions will began at break time of movie')
+insert into Advertisement values ('AFB03','NewsPaper',15,'Century','The promotions appear on the marketing magazine')
+insert into Category values ('EWAS01','Saving life','If you want to build a secure future with short, you will need to have detailed income plan at a certain time.')
+insert into Category values ('KBV02','Insurance','Including related personal and family liability and family personal accident coverage.')
+insert into Category values ('SDE012','Plan future','Child Education Planning - Providing education is to provide your child a bright future')
+insert into Product (CateID,ProName,ProDes) values ('EWAS01','Idea for life','Everyone desires the best for their family and their loved ones and to be protected against financial loss if the worst happen.')
+insert into Product (CateID,ProName,ProDes) values('SDE012','Education','Investment in education for children has always been the top priority of parents.')
+insert into Product (CateID,ProName,ProDes) values('EWAS01','Saving money','You will have much money for in my life so you can do everything')
+insert into Product (CateID,ProName,ProDes) values ('KBV02','Home care',' HomeCare provides comprehensive protection against the loss or damage to your home and its assets caused by fire or special perils')
+insert into Product (CateID,ProName,ProDes) values ('EWAS01','Health care','You can rest assured that your health is covered by one of the world’s ')
+insert into Campaign (CampName,ProID,StartDate,EndDate,Period,AdID,estBudget,actBudget,estSale,actSale,estVariance,actVariance,fnVariance,CampDes,CampEnded) values ('Perfect Life' ,1,'01-12-2013','04-10-2013',91,'TII01',1200,900,1600,1400,5,-0.125,4.875,'Safe of 20% for customer registry before 08/03/2013',1)
+insert into Campaign (CampName,ProID,StartDate,EndDate,Period,AdID,estBudget,actBudget,estSale,actSale,estVariance,actVariance,fnVariance,CampDes,CampEnded) values ('Super Saving',3,'02-10-2013','05-26-2013',94,'GTT02',800,600,1000,1100,6.5,0.1,6.6,'Safe of 30% for student and give movie ticket',0)
+insert into Campaign (CampName,ProID,StartDate,EndDate,Period,AdID,estBudget,actBudget,estSale,actSale,estVariance,actVariance,fnVariance,CampDes,CampEnded) values ('Future Star' ,4,'03-04-2013','05-06-2013',62,'AFB03',2200,1800,3000,4000,5.8,0.3,6.1,'200 gifts for lady customer',1)
+insert into Campaign (CampName,ProID,StartDate,EndDate,Period,AdID,estBudget,actBudget,estSale,actSale,estVariance,actVariance,fnVariance,CampDes,CampEnded) values ('Angel of life',5,'05-01-2013','07-31-2013',63,'TII01',1600,1500,2100,1900,7.2,-0.95,7.104,'Give travel ticket in Hawaii for customer',0)
+GO
+GO
+update Campaign set Period = datediff(day, StartDate, EndDate)
+GO
